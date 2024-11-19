@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_consumindo_api/splash_screen.dart';
+import 'package:flutter_consumindo_api/pages/splash_screen.dart';
 import 'package:provider/provider.dart';
 
 class AppWidget extends StatelessWidget {
