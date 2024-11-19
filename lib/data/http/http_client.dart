@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-abstract interface class HttpClient {
+abstract interface class IHttpClient {
   Future get({required url, Map<String, dynamic>? headers});
   Future post(
       {required url,
@@ -8,7 +8,7 @@ abstract interface class HttpClient {
       Map<String, dynamic>? data});
 }
 
-class DioClient implements HttpClient {
+class DioClient implements IHttpClient {
   final Dio client;
 
   DioClient(this.client);
