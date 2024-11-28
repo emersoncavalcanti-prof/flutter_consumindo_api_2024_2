@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_consumindo_api/data/http/http_client.dart';
+import 'package:flutter_consumindo_api/data/repositories/user_repository.dart';
+import 'package:flutter_consumindo_api/pages/login/store/user_store.dart';
 import 'package:flutter_consumindo_api/widget/custom_edit.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +22,10 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final dioClient = Provider.of<DioClient>(context);
+
+    UserStore store = UserStore(
+      repository: UserRepository(client: dioClient),
+    );
 
     final width = MediaQuery.of(context).size.width;
 
@@ -53,6 +59,7 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 Lottie.asset('assets/animacoes/welcome.json'),
                 CustomEdit(
+                  controller: controllerEmail,
                   label: 'Digite seu Email',
                   icone: const Icon(Icons.email),
                   validator: (email) {
@@ -64,6 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 15),
                 CustomEdit(
+                  controller: controllerPassword,
                   label: 'Digite sua Senha',
                   icone: const Icon(Icons.lock),
                   isObscure: true,
@@ -72,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                       return 'Digite sua Senha';
                     }
 
-                    if (password.length < 6) {
+                    if (password.length < 4) {
                       return 'Sua senha deve ter no mínimo 6 caracteres';
                     }
                     return null;
@@ -80,11 +88,40 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 15),
                 InkWell(
-                  onTap: () {
+                  onTap: () async {
                     if (_formKey.currentState!.validate()) {
                       setState(() {
                         clicou = !clicou;
                       });
+
+                      await store.login(
+                        email: controllerEmail.text,
+                        password: controllerPassword.text,
+                      );
+
+                      setState(() {
+                        clicou = !clicou;
+                      });
+
+                      if (store.error.value.isNotEmpty) {
+                        if (!mounted) return;
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              //'Login ou senha inválidos',
+                              store.error.value,
+                              style: const TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        );
+                      } else {
+                        if (!mounted) return;
+
+                        Navigator.pushReplacementNamed(context, '/home');
+                      }
                     }
                   },
                   child: Center(

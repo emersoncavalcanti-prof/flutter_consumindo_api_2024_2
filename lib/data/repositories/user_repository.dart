@@ -10,6 +10,8 @@ class UserRepository {
   UserRepository({required this.client});
 
   Future<UserModel> login({Map<String, dynamic>? data}) async {
+    print('${Endpoints.baseUrl}/login');
+
     final response = await client.post(
       url: '${Endpoints.baseUrl}/login',
       data: data,
