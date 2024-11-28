@@ -60,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
             children: [
               AnimatedContainer(
                 duration: const Duration(seconds: 3),
-                curve: Curves.elasticInOut,
+                curve: Curves.elasticOut,
                 width: width,
                 height: height,
                 child: Hero(
