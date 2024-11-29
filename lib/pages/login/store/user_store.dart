@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_consumindo_api/data/http/exceptions.dart';
 import 'package:flutter_consumindo_api/data/local/local_storage.dart';
@@ -13,6 +14,21 @@ class UserStore {
   final ValueNotifier<String> error = ValueNotifier('');
 
   UserStore({required this.repository});
+
+  Future getUser() async {
+    isLoading.value = true;
+    try {
+      final result = await repository.get();
+      state.value = result;
+    } on NotFoundException catch (e) {
+      error.value = e.message;
+    } catch (e) {
+      error.value = e.toString();
+    }
+
+    isLoading.value = false;
+    return null;
+  }
 
   Future<UserModel?> login({
     required String email,

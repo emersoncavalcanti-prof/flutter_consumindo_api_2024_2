@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                     }
 
                     if (password.length < 4) {
-                      return 'Sua senha deve ter no mínimo 6 caracteres';
+                      return 'Sua senha deve ter no mínimo 4 caracteres';
                     }
                     return null;
                   },
@@ -107,11 +107,11 @@ class _LoginPageState extends State<LoginPage> {
                         if (!mounted) return;
 
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
+                          const SnackBar(
                             content: Text(
                               //'Login ou senha inválidos',
-                              store.error.value,
-                              style: const TextStyle(
+                              'Login ou senha inválidos',
+                              style: TextStyle(
                                 color: Colors.white,
                               ),
                             ),
