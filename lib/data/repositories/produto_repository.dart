@@ -9,7 +9,7 @@ class ProdutoRepository {
 
   ProdutoRepository({required this.client});
 
-  Future<List<ProdutoModel>> getProdutos() async {
+  Future<List<ProdutoModel>> get() async {
     final token = await LocalStorage.getString('token');
 
     final response =

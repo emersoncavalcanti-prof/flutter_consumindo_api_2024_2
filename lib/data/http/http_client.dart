@@ -6,6 +6,21 @@ abstract interface class IHttpClient {
       {required url,
       Map<String, dynamic>? headers,
       Map<String, dynamic>? data});
+
+  Future put(
+      {required url,
+      Map<String, dynamic>? headers,
+      Map<String, dynamic>? data});
+
+  Future patch(
+      {required url,
+      Map<String, dynamic>? headers,
+      Map<String, dynamic>? data});
+
+  Future delete(
+      {required url,
+      Map<String, dynamic>? headers,
+      Map<String, dynamic>? data});
 }
 
 class DioClient implements IHttpClient {
@@ -24,6 +39,33 @@ class DioClient implements IHttpClient {
       Map<String, dynamic>? headers,
       Map<String, dynamic>? data}) async {
     return await client.post(url,
+        data: data, options: Options(headers: headers));
+  }
+
+  @override
+  Future delete(
+      {required url,
+      Map<String, dynamic>? headers,
+      Map<String, dynamic>? data}) async {
+    return await client.delete(url,
+        data: data, options: Options(headers: headers));
+  }
+
+  @override
+  Future patch(
+      {required url,
+      Map<String, dynamic>? headers,
+      Map<String, dynamic>? data}) async {
+    return await client.patch(url,
+        data: data, options: Options(headers: headers));
+  }
+
+  @override
+  Future put(
+      {required url,
+      Map<String, dynamic>? headers,
+      Map<String, dynamic>? data}) async {
+    return await client.patch(url,
         data: data, options: Options(headers: headers));
   }
 }

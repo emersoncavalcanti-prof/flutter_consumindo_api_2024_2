@@ -2,22 +2,22 @@
 import 'dart:convert';
 
 class ProdutoModel {
-  final String produto;
+  final String nome;
   final double preco;
 
-  ProdutoModel({required this.produto, required this.preco});
+  ProdutoModel({required this.nome, required this.preco});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'produto': produto,
+      'nome': nome,
       'preco': preco,
     };
   }
 
   factory ProdutoModel.fromMap(Map<String, dynamic> map) {
     return ProdutoModel(
-      produto: map['produto'] as String,
-      preco: map['preco'] as double,
+      nome: map['nome'] as String,
+      preco: (map['preco'] as num).toDouble(),
     );
   }
 
